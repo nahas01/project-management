@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
@@ -10,19 +11,23 @@ export default function ConfirmPassword() {
         password: '',
     });
 
+    useEffect(() => {
+        return () => {
+            reset('password');
+        };
+    }, []);
+
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('password.confirm'), {
-            onFinish: () => reset('password'),
-        });
+        post(route('password.confirm'));
     };
 
     return (
         <GuestLayout>
             <Head title="Confirm Password" />
 
-            <div className="mb-4 text-sm text-gray-600">
+            <div className="mb-4 text-sm text-gray-600 dark:text-gray-400">
                 This is a secure area of the application. Please confirm your password before continuing.
             </div>
 

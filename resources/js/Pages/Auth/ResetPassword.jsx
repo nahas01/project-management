@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
@@ -13,12 +14,16 @@ export default function ResetPassword({ token, email }) {
         password_confirmation: '',
     });
 
+    useEffect(() => {
+        return () => {
+            reset('password', 'password_confirmation');
+        };
+    }, []);
+
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('password.store'), {
-            onFinish: () => reset('password', 'password_confirmation'),
-        });
+        post(route('password.store'));
     };
 
     return (
@@ -32,6 +37,7 @@ export default function ResetPassword({ token, email }) {
                     <TextInput
                         id="email"
                         type="email"
+                        id="email"
                         name="email"
                         value={data.email}
                         className="mt-1 block w-full"
@@ -46,8 +52,8 @@ export default function ResetPassword({ token, email }) {
                     <InputLabel htmlFor="password" value="Password" />
 
                     <TextInput
-                        id="password"
                         type="password"
+                        id="password"
                         name="password"
                         value={data.password}
                         className="mt-1 block w-full"
